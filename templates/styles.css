@@ -1,0 +1,50 @@
+
+.main-info{
+    background-color: none;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.footer-contacts{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+   
+}
+
+nav{
+    display: flex;
+}
+
+.icon{
+    width: 2vw;
+    height: 2vh;
+}
+
+#contact{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30vh; 
+}
+
+.navbar-custom {
+    background-color: #F8F0E5;
+}
+
+.custom-main {
+    background-color: #EADBC8;
+}
+
+body{
+    background-color: #DAC0A3;
+}
+
+.addButton{
+    position: relative;
+    transition: transform 1s ease;
+}
