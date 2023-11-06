@@ -41,7 +41,6 @@ const dataSource = [
 
 const cookieItemsContainer = document.getElementById("cookieItems");
 
-// Loop through the data source and generate HTML content for each item
 dataSource.forEach((cookie, index) => {
     const cookieItem = document.createElement("div");
     cookieItem.classList.add("col-lg-4", "col-md-6", "mb-4");
@@ -54,31 +53,73 @@ dataSource.forEach((cookie, index) => {
                 <h5 class="card-title">${cookie.title}</h5>
                 <p class="card-text">${cookie.description}</p>
                 <p class="card-text price">$${cookie.price}</p>
-                <a href="#" id="addButton${index}" class="addButton btn btn-primary">Add to Cart</a>
+                <a id="addButton${index}" class="addButton btn btn-primary">Add to Cart</a>
             </div>
         </div>
     `;
 
-    // Append the generated item to the container
     cookieItemsContainer.appendChild(cookieItem);
 });
 
-// Add a single event listener for all "Add to Cart" buttons
 cookieItemsContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("addButton")) {
-        const buttonId = event.target.id; // Get the clicked button's ID
-        const index = buttonId.replace("addButton", ""); // Extract the index
-        // Add to cart logic for the specific cookie item with the index
+        const buttonId = event.target.id; 
+        const index = buttonId.replace("addButton", ""); 
+        const addToCartAudio = new Audio("templates/audio/zapsplat_household_alarm_clock_button_press_12967.mp3");
+        addToCartAudio.play();
     }
 });
 
 
+const cartContainer = document.getElementById("cartItems");
+
+const cartItems = [];
+
+function updateCartDisplay() {
+    cartContainer.innerHTML = "";
+
+    cartItems.forEach((item, index) => {
+        const cartItem = document.createElement("div");
+        cartItem.classList.add("cart-item");
+        cartItem.innerHTML = `
+            <span>${item.title} - Price: $${item.price}</span>
+            <button class="remove-button" data-index="${index}">Remove</button>
+        `;
+        cartContainer.appendChild(cartItem);
+    });
+}
 
 cookieItemsContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("addButton")) {
-        const buttonId = event.target.id; // Get the clicked button's ID
-        const index = buttonId.replace("addButton", ""); // Extract the index
-        // Add to cart logic for the specific cookie item with the index
-        // Also, play the sound here
+        const buttonId = event.target.id; 
+        const index = buttonId.replace("addButton", ""); 
+        const item = dataSource[index];
+        cartItems.push(item);
+
+        updateCartDisplay();
     }
 });
+
+cartContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("remove-button")) {
+        const index = event.target.getAttribute("data-index");
+        cartItems.splice(index, 1);
+        updateCartDisplay();
+    }
+});
+
+
+// const cart = {};
+
+// function addItemToCart(item) {
+//     if (cart[item.title]) {
+//         cart[item.title].quantity += 1;
+//     } else {
+//         cart[item.title] = {
+//             item: item,
+//             quantity: 1,
+//         };
+//     }
+
+//     updateCartDisplay();
+// }
